@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Weeks of life</title>
+    <style>
+      .box {
+        float: left;
+        width: 10px;
+        height: 10px;
+        margin: 3px;
+        border: 1px solid rgba(0, 0, 0, 1);
+      }
+      .allBoxes{
+        display: inline-block;
+        margin: auto;
+      }
+      .years{
+        float: right;
+        font-size: 15px;
+        margin-right: 5px;
+      }
+      .weeks{
+        float: left;
+        font-size: 15px;
+      }
+      .week{
+        background: #000;
+      }
+    </style>
+  </head>
+
+
+
+  <body><center>
+    <h1>Weeks of Life</h1>
+    <p>Visualise your life by weeks.</p>
+    <form>
+      Date-Of-Birth:
+      <!--<input type="date" name="bday" id='bday'/>-->
+      Date
+      <select id="date"></select>
+      Month
+      <select id="month"></select>
+      Year
+      <select id="year"></select>
+    </form>
+
+    <script type="text/javascript">
+      function dob(){
+        var i, j, k, weeksIn = "";
+        var dateIn = "";
+        var monthIn = "";
+        var yearIn = "";
+        for (i = 1; i < 32; i++){
+          dateIn += '<option>' + i + '</option>';
+          if(i < 13){
+            monthIn += '<option>' + i + '</option>'
+          }
+        }
+        for(j = 1935; j < 2100; j++){
+          yearIn += '<option>' + j + '</option>'
+        }
+        document.getElementById('date').innerHTML = dateIn;
+        document.getElementById('month').innerHTML = monthIn;
+        document.getElementById('year').innerHTML = yearIn;
+      }
+      window.onload = dob;
+    </script>
+
+
+
+    <p>Your life if you were to live 82 years (Average Canadian Life expectancy)</p>
+    <h4>Inspired by the TED Talk: <a href="https://www.ted.com/talks/tim_urban_inside_the_mind_of_a_master_procrastinator" target="_blank">Inside the mind of a master procrastinator</a></h4>
+    <button id="submit" type="button" onclick="weekBoxes()">submit</button>
+    <br/>
+    <br/>
+    <div class="allBoxes" id="boxy"></div>
+
+
+    <script>
+      function weekBoxes(){
+        var doBirth = document.getElementById('year').value + "-" + document.getElementById('month').value + "-" + document.getElementById('date').value;
+        var today = new Date();
+        var dobMili = new Date(doBirth);
+        var weeks = Math.round((today - dobMili)/604800000);
+        var i, j = 1, k = 0, output = "";
+        for (i = 1; i < 4265; i++){
+          if(i < weeks){
+            if(i % 52 == 0){
+              j++;
+              output += '<div class="box week"></div>' + '<br/>';
+              if (j % 5 == 0){
+                k += 5;
+                output += '<div class="years">' + k + '</div>';
+              }
+            }
+            else{
+              output += '<div class="box week"></div>';
+            }
+          }
+          else{
+            if(i % 52 == 0){
+              j++;
+              output += '<div class="box"></div>' + '<br/>';
+              if (j % 5 == 0){
+                k += 5;
+                output += '<div class="years">' + k + '</div>';
+              }
+            }
+            else{
+              output += '<div class="box"></div>';
+            }
+          }
+        }
+        document.getElementById('boxy').innerHTML = output;
+      }
+    </script>
+
+
+  </center></body>
+</html>
